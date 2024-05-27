@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulación Financiera</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function calcularValorFuturo() {
+            var monto = parseFloat(document.getElementById('montoFuturo').value);
+            var tasaF = parseFloat(document.getElementById('tasaFuturo').value);
+            var plazoF = parseFloat(document.getElementById('plazoFuturo').value);
+            var resultadoF = document.getElementById('resultadoFuturo');
+    
+            if (isNaN(monto) || isNaN(tasaF) || isNaN(plazoF)) {
+                resultadoF.innerHTML = 'Por favor ingrese valores válidos.';
+                return false;
+            }
+    
+            var tasaDecimalF = tasaF / 100;
+            var valorFuturo = monto * Math.pow((1 + tasaDecimalF), plazoF);
+            resultadoF.innerHTML = 'El valor futuro es: ' + valorFuturo.toFixed(2);
+            return false;
+        }
+    
+
+            function calcularValorPresente() {
+    var valorFuturo = document.getElementById('valorFuturoPresente').value;
+    var tasaP = document.getElementById('tasaPresente').value;
+    var plazoP = document.getElementById('plazoPresente').value;
+    var resultadoP = document.getElementById('resultadoPresente');
+
+    var F = parseFloat(valorFuturo);
+    var r = parseFloat(tasaP) / 100;
+    var n = parseFloat(plazoP);
+
+    if (!isNaN(F) && !isNaN(r) && !isNaN(n)) {
+        var valorPresente = F / Math.pow((1 + r), n);
+        resultadoP.innerHTML = 'El valor presente es: ' + valorPresente.toFixed(2);
+    } else {
+        resultadoP.innerHTML = 'Por favor, asegúrate de que todos los campos están llenos y son números válidos.';
+    }
+
+    return false;
+}
+
+</script>
+    
+</head>
+<body>
+    <header>
+        <h1>Simulación de Créditos y Capitalización</h1>
+        <nav>
+            <a href="#teoria">Teoría</a>
+            <a href="#valorFuturo">Valor Futuro</a>
+            <a href="#valorPresente">Valor Presente</a>
+        </nav>
+    </header>
+    <section id="teoria" class="teoria">
+        <h2>Teoría</h2>
+        <div class="card">
+            <h3>Series Uniformes (Anualidades)</h3>
+            <p>Una <strong>serie uniforme</strong>, también conocida como anualidad, es un flujo constante de pagos o ingresos que se realiza a intervalos regulares. Este tipo de serie es crucial en el contexto financiero, donde se utiliza frecuentemente para calcular los pagos de préstamos, hipotecas y otros tipos de financiamiento. Por ejemplo, las cuotas mensuales de un préstamo hipotecario son un tipo clásico de serie uniforme donde el deudor realiza pagos iguales a lo largo del tiempo para cubrir tanto el capital como los intereses del préstamo.</p>
+            <p>En el ámbito de las inversiones, las anualidades se utilizan para determinar el valor acumulado de aportes regulares en fondos de retiro o cuentas de ahorro, donde los intereses se capitalizan a una tasa periódica fija. Este concepto es esencial para planificar a largo plazo, permitiendo a los inversores calcular cuánto crecerá su inversión a lo largo de los años bajo condiciones constantes.</p>
+            <p><strong>Ejemplo:</strong> Consideremos un depósito mensual de $100 en una cuenta de ahorros que ofrece un 5% de interés anual compuesto mensualmente durante 5 años. ¿Cuál será el valor futuro de estos ahorros?</p>
+            <p><strong>Solución Manual:</strong> Calculamos el valor futuro usando la fórmula del valor futuro de una anualidad. Multiplicamos $100 por el resultado de [(1 + 0.0041667)^60 - 1] dividido por 0.0041667, lo que da aproximadamente $6,801.34.</p>
+            <p><strong>Solución en Excel:</strong> Usamos la fórmula <code>=FV(0.05/12, 60, -100)</code> para obtener el mismo resultado.</p>
+            <a href="https://docs.google.com/spreadsheets/d/1qlO3dBMYSio4vd4e3TshyzGi_hsSEanz/edit?usp=drive_link&ouid=105842448729035284860&rtpof=true&sd=true"target="_blank">Ejemplos y ejercicios en Excel</a>
+        </div>
+        <div class="card">
+            <h3>Series Variables</h3>
+            <p>Las <strong>series variables</strong> consisten en flujos de caja que no son constantes a lo largo del tiempo, variando en cantidad en cada período. Este tipo de series es común en situaciones donde los pagos o los ingresos cambian debido a condiciones de contrato, ajustes de inflación, u otros factores económicos. En el contexto de créditos, un préstamo con pagos variables puede ayudar a los prestatarios a ajustar sus pagos a su flujo de caja esperado, incrementando o disminuyendo la cuota según varían sus ingresos o gastos.</p>
+            <p>Para inversionistas, entender las series variables es crucial cuando se evalúan inversiones en proyectos o negocios donde los retornos no son predecibles y pueden fluctuar ampliamente. Estas fluctuaciones pueden ser causadas por cambios en el mercado, variaciones en las ventas, o por la naturaleza estacional de un negocio.</p>
+            <p><strong>Ejemplo:</strong> Si depositas $100 el primer mes y aumentas tu depósito en $10 cada mes subsiguiente durante 3 años en una cuenta que ofrece un 4% de interés anual compuesto mensualmente, ¿cuál será el valor acumulado al final del período?</p>
+            <p><strong>Solución Manual:</strong> Se calcula el valor futuro de cada depósito individualmente, ajustando la cantidad por el interés compuesto de cada mes hasta el final del período, y luego se suman todos estos valores para obtener el total acumulado.</p>
+            <p><strong>Solución en Excel:</strong> Usamos una columna para calcular el valor futuro de cada depósito con la fórmula <code>=FV(0.04/12, Número de meses restantes, -Cantidad del depósito)</code> y sumamos todos estos valores.</p>
+            <a href="https://docs.google.com/spreadsheets/d/1ic8WPxVr0dQD5Bcglfz-MYYH9dhhuNHU/edit?usp=drive_link&ouid=105842448729035284860&rtpof=true&sd=true"target="_blank">Ejemplos y ejercicios en Excel</a>
+        </div>
+        <div class="card">
+            <h3>Evaluación Financiera de Inversiones</h3>
+            <p>La <strong>evaluación financiera de inversiones</strong> es una herramienta crítica para cualquier inversor o administrador financiero. Utiliza varios indicadores financieros para determinar la viabilidad y rentabilidad de las inversiones propuestas. Entre los más conocidos y utilizados están el Valor Presente Neto (VPN), la Tasa Interna de Retorno (TIR), la Relación Costo-Beneficio (C/B), y el Tiempo de Recuperación de la Inversión. Estos indicadores ayudan a comparar diferentes opciones de inversión bajo un marco común, permitiendo a los inversionistas tomar decisiones informadas basadas en proyecciones financieras objetivas.</p>
+            <p>El VPN, por ejemplo, ayuda a determinar el valor total de una serie de flujos de caja futuros descontados al presente, ofreciendo una medida clara de los beneficios netos ajustados al tiempo y al riesgo. La TIR, por su parte, es la tasa de descuento que iguala el valor presente de los flujos de caja futuros con la inversión inicial, proporcionando una medida de la rentabilidad de la inversión.</p>
+            <p><strong>Ejemplo de VPN:</strong> Si inviertes $1,000 en un proyecto y esperas recibir $200 anuales durante 6 años con una tasa de descuento del 7%, ¿cuál será el VPN de la inversión?</p>
+            <p><strong>Solución Manual:</strong> Se calcula sumando los valores presentes de cada uno de los flujos de caja futuros, descontados al 7%, y luego restando la inversión inicial. El resultado es aproximadamente $183.66.</p>
+            <p><strong>Solución en Excel:</strong> Se utiliza la fórmula <code>=NPV(7%, 200, 200, 200, 200, 200, 200) - 1000</code> para obtener el mismo resultado.</p>
+            <a href="https://docs.google.com/spreadsheets/d/1Gp3Ld7a_vKuhZXi9GUT5Zo9j1C3xNoIA/edit?usp=drive_link&ouid=105842448729035284860&rtpof=true&sd=true"target="_blank">Ejemplos y ejercicios en Excel</a>
+        </div>
+    </section>
+    <section id="valorFuturo">
+        <h2>Calcular Valor Futuro</h2>
+        <form onsubmit="return calcularValorFuturo();">
+            <label for="montoFuturo">Monto Inicial:</label>
+            <input type="number" id="montoFuturo" name="montoFuturo" required><br>
+            <label for="tasaFuturo">Tasa de Interés (%):</label>
+            <input type="number" id="tasaFuturo" name="tasaFuturo" step="0.01" required><br>
+            <label for="plazoFuturo">Plazo (en períodos):</label>
+            <input type="number" id="plazoFuturo" name="plazoFuturo" required><br>
+            <input type="submit" value="Calcular">
+            <p id="resultadoFuturo"></p>
+        </form>
+    </section>
+    <section id="valorPresente">
+        <h2>Calcular Valor Presente</h2>
+        <form onsubmit="return calcularValorPresente();">
+            <label for="valorFuturoPresente">Valor Futuro:</label>
+            <input type="number" id="valorFuturoPresente" name="valorFuturoPresente" required><br>
+            <label for="tasaPresente">Tasa de Descuento (%):</label>
+            <input type="number" id="tasaPresente" name="tasaPresente" step="0.01" required><br>
+            <label for="plazoPresente">Plazo (en períodos):</label>
+            <input type="number" id="plazoPresente" name="plazoPresente" required><br>
+            <input type="submit" value="Calcular">
+            <p id="resultadoPresente"></p>
+        </form>
+    </section>     
+    <footer>
+        <p>Contacto: duban.canoles@cecar.edu.co</p>
+    </footer>
+</body>
+</html>
+
+
+
+
+
